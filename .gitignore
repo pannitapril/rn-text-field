@@ -1,6 +1,8 @@
-coverage
-node_modules
-example/node_modules
+# node.js
+#
+node_modules/
+npm-debug.log
+yarn-error.log
 
 .DS_Store
 *.sw[po]
