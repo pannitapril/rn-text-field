@@ -9,13 +9,18 @@
 [example-url]: https://cloud.githubusercontent.com/assets/2055622/24325711/eaa4ff08-11af-11e7-8550-2504c1580979.gif
 [rn-textinput]: https://facebook.github.io/react-native/docs/textinput.html#props
 [md-textfield]: https://material.io/guidelines/components/text-fields.html
+[main-repo-url]: https://github.com/n4kz/react-native-material-textfield
 
-# react-native-material-textfield
+# @miidx/rn-text-input
 
 [![npm][npm-badge]][npm-url]
 [![license][license-badge]][license-url]
 [![travis][travis-badge]][travis-url]
 [![codeclimate][codeclimate-badge]][codeclimate-url]
+
+This is a modified version of [react-native-material-textfield][main-repo-url]
+- We add `suffixIcon` props to render icon on the right hand side of the control.
+
 
 Material texfield with consistent behaviour on iOS and Android
 
@@ -87,6 +92,7 @@ class Example extends Component {
  title                 | Text field helper text                      |   String | -
  prefix                | Text field prefix text                      |   String | -
  suffix                | Text field suffix text                      |   String | -
+ suffixIconName        | Icon name to be displayted on the righ hand side of the Text field. The icon name must be one of `react-native-vector-icons/MaterialCommunityIcons`                      |   String | -
  error                 | Text field error text                       |   String | -
  errorColor            | Text field color for errored state          |   String | rgb(213, 0, 0)
  disabledLineType      | Text field line type in disabled state      |   String | dotted
