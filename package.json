@@ -1,5 +1,5 @@
 {
-  "name": "@miidx/rn-text-input",
+  "name": "@miidx/rn-text-field",
   "version": "0.9.0",
   "license": "BSD-3-Clause",
   "author": "Alexander Nazarov <n4kz@n4kz.com>",
@@ -21,12 +21,12 @@
   "main": "index.js",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/miidx/rn-text-input"
+    "url": "git+https://github.com/miidx/rn-text-field"
   },
   "bugs": {
-    "url": "https://github.com/miidx/rn-text-input/issues"
+    "url": "https://github.com/miidx/rn-text-field/issues"
   },
-  "homepage": "https://github.com/miidx/rn-text-input#readme",
+  "homepage": "https://github.com/miidx/rn-text-field#readme",
   "dependencies": {},
   "peerDependencies": {
     "react": "*",
