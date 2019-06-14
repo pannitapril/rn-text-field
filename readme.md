@@ -19,7 +19,7 @@
 [![codeclimate][codeclimate-badge]][codeclimate-url]
 
 This is a modified version of [react-native-material-textfield][main-repo-url]
-- We add `suffixIcon` props to render icon on the right hand side of the control.
+- We add `suffixIconName` props to render icon on the right hand side of the control.
 
 
 Material texfield with consistent behaviour on iOS and Android
