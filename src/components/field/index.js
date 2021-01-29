@@ -270,7 +270,6 @@ export default class TextField extends PureComponent {
     const {
       [type]: affix,
       fontSize,
-      fontFamily,
       baseColor,
       animationDuration,
       affixTextStyle,
@@ -285,7 +284,6 @@ export default class TextField extends PureComponent {
       active,
       focused,
       fontSize,
-      fontFamily,
       baseColor,
       animationDuration,
     };
@@ -312,7 +310,6 @@ export default class TextField extends PureComponent {
       disabledLineWidth,
       animationDuration,
       fontSize,
-      fontFamily,
       titleFontSize,
       labelFontSize,
       labelHeight,
@@ -386,7 +383,6 @@ export default class TextField extends PureComponent {
 
     const inputStyle = {
       fontSize,
-      fontFamily,
       textAlign,
 
       color: (disabled || defaultVisible)
@@ -406,7 +402,6 @@ export default class TextField extends PureComponent {
     };
 
     const errorStyle = {
-      fontFamily,
       color: errorColor,
 
       opacity: focus.interpolate({
@@ -423,7 +418,6 @@ export default class TextField extends PureComponent {
     };
 
     const titleStyle = {
-      fontFamily,
       color: baseColor,
 
       opacity: focus.interpolate({
@@ -470,7 +464,6 @@ export default class TextField extends PureComponent {
     const labelProps = {
       baseSize: labelHeight,
       basePadding: labelPadding,
-      fontFamily,
       fontSize,
       activeFontSize: labelFontSize,
       tintColor,
@@ -481,7 +474,7 @@ export default class TextField extends PureComponent {
       focused,
       errored,
       restricted,
-      style: [labelTextStyle, { fontFamily }],
+      style: labelTextStyle,
     };
 
     const counterProps = {
@@ -489,7 +482,6 @@ export default class TextField extends PureComponent {
       errorColor,
       count,
       limit,
-      fontFamily,
       fontSize: titleFontSize,
       style: titleTextStyle,
     };
@@ -553,7 +545,6 @@ TextField.propTypes = {
   animationDuration: PropTypes.number,
 
   fontSize: PropTypes.number,
-  fontFamily: PropTypes.string,
   titleFontSize: PropTypes.number,
   labelFontSize: PropTypes.number,
   labelHeight: PropTypes.number,
@@ -612,7 +603,6 @@ TextField.defaultProps = {
   animationDuration: 225,
 
   fontSize: 16,
-  fontFamily: 'Montserrat-Regular',
   titleFontSize: 12,
   labelFontSize: 14,
   labelHeight: 32,

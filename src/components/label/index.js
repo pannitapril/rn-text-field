@@ -24,7 +24,6 @@ export default class Label extends PureComponent {
 
     baseSize: PropTypes.number.isRequired,
     fontSize: PropTypes.number.isRequired,
-    fontFamily: PropTypes.string.isRequired,
     activeFontSize: PropTypes.number.isRequired,
     basePadding: PropTypes.number.isRequired,
 
@@ -99,7 +98,6 @@ export default class Label extends PureComponent {
       active,
       focused,
       animationDuration,
-      fontFamily,
       ...props
     } = this.props;
 
@@ -122,8 +120,6 @@ export default class Label extends PureComponent {
       fontSize: input.interpolate({
         inputRange: [0, 1],
         outputRange: [fontSize, activeFontSize],
-        fontFamily,
-
       }),
 
       color,

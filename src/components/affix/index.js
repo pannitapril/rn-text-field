@@ -25,7 +25,6 @@ export default class Affix extends PureComponent {
     type: PropTypes.oneOf(['prefix', 'suffix']).isRequired,
 
     fontSize: PropTypes.number.isRequired,
-    fontFamily: PropTypes.string.isRequired,
     baseColor: PropTypes.string.isRequired,
     animationDuration: PropTypes.number.isRequired,
 
@@ -64,7 +63,7 @@ export default class Affix extends PureComponent {
   render() {
     const { opacity } = this.state;
     const {
-      style, children, type, fontSize, fontFamily, baseColor: color,
+      style, children, type, fontSize, baseColor: color,
     } = this.props;
 
     const containerStyle = {
@@ -75,7 +74,6 @@ export default class Affix extends PureComponent {
     const textStyle = {
       color,
       fontSize,
-      fontFamily,
     };
 
     switch (type) {
