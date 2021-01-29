@@ -1,3 +1,7 @@
+/* eslint-disable default-case */
+/* eslint-disable no-bitwise */
+/* eslint-disable react/require-default-props */
+/* eslint-disable react/no-unused-prop-types */
 import PropTypes from 'prop-types';
 import React, { PureComponent } from 'react';
 import { Animated } from 'react-native';
@@ -21,6 +25,7 @@ export default class Affix extends PureComponent {
     type: PropTypes.oneOf(['prefix', 'suffix']).isRequired,
 
     fontSize: PropTypes.number.isRequired,
+    fontFamily: PropTypes.string.isRequired,
     baseColor: PropTypes.string.isRequired,
     animationDuration: PropTypes.number.isRequired,
 
@@ -35,21 +40,21 @@ export default class Affix extends PureComponent {
   constructor(props) {
     super(props);
 
-    let { active, focused } = this.props;
+    const { active, focused } = this.props;
 
     this.state = {
-      opacity: new Animated.Value((active || focused)? 1 : 0),
+      opacity: new Animated.Value((active || focused) ? 1 : 0),
     };
   }
 
-  componentWillReceiveProps(props) {
-    let { opacity } = this.state;
-    let { active, focused, animationDuration } = this.props;
+  componentDidUpdate(prevProps, prevState) {
+    const { opacity } = prevState;
+    const { active, focused, animationDuration } = this.props;
 
-    if ((focused ^ props.focused) || (active ^ props.active)) {
+    if ((focused ^ prevProps.focused) || (active ^ prevProps.active)) {
       Animated
         .timing(opacity, {
-          toValue: (props.active || props.focused)? 1 : 0,
+          toValue: (active || focused) ? 1 : 0,
           duration: animationDuration,
         })
         .start();
@@ -57,17 +62,20 @@ export default class Affix extends PureComponent {
   }
 
   render() {
-    let { opacity } = this.state;
-    let { style, children, type, fontSize, baseColor: color } = this.props;
+    const { opacity } = this.state;
+    const {
+      style, children, type, fontSize, fontFamily, baseColor: color,
+    } = this.props;
 
-    let containerStyle = {
+    const containerStyle = {
       height: fontSize * 1.5,
       opacity,
     };
 
-    let textStyle = {
+    const textStyle = {
       color,
       fontSize,
+      fontFamily,
     };
 
     switch (type) {

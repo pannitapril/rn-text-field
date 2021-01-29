@@ -1,3 +1,7 @@
+/* eslint-disable no-nested-ternary */
+/* eslint-disable no-bitwise */
+/* eslint-disable react/require-default-props */
+/* eslint-disable react/default-props-match-prop-types */
 import PropTypes from 'prop-types';
 import React, { PureComponent } from 'react';
 import { Animated } from 'react-native';
@@ -20,6 +24,7 @@ export default class Label extends PureComponent {
 
     baseSize: PropTypes.number.isRequired,
     fontSize: PropTypes.number.isRequired,
+    fontFamily: PropTypes.string.isRequired,
     activeFontSize: PropTypes.number.isRequired,
     basePadding: PropTypes.number.isRequired,
 
@@ -46,20 +51,22 @@ export default class Label extends PureComponent {
     };
   }
 
-  componentWillReceiveProps(props) {
-    let { focus, input } = this.state;
-    let { active, focused, errored, animationDuration: duration } = this.props;
+  componentDidUpdate(prevProps, prevState) {
+    const { focus, input } = prevState;
+    const {
+      active, focused, errored, animationDuration: duration,
+    } = this.props;
 
-    if (focused ^ props.focused || active ^ props.active) {
-      let toValue = this.inputState(props);
+    if (focused ^ prevProps.focused || active ^ prevProps.active) {
+      const toValue = this.inputState(this.props);
 
       Animated
         .timing(input, { toValue, duration })
         .start();
     }
 
-    if (focused ^ props.focused || errored ^ props.errored) {
-      let toValue = this.focusState(props);
+    if (focused ^ prevProps.focused || errored ^ prevProps.errored) {
+      const toValue = this.focusState(this.props);
 
       Animated
         .timing(focus, { toValue, duration })
@@ -68,16 +75,16 @@ export default class Label extends PureComponent {
   }
 
   inputState({ focused, active } = this.props) {
-    return active || focused? 1 : 0;
+    return active || focused ? 1 : 0;
   }
 
   focusState({ focused, errored } = this.props) {
-    return errored? -1 : (focused? 1 : 0);
+    return errored ? -1 : (focused ? 1 : 0);
   }
 
   render() {
-    let { focus, input } = this.state;
-    let {
+    const { focus, input } = this.state;
+    const {
       children,
       restricted,
       fontSize,
@@ -89,20 +96,21 @@ export default class Label extends PureComponent {
       basePadding,
       style,
       errored,
-      active, 
+      active,
       focused,
       animationDuration,
+      fontFamily,
       ...props
     } = this.props;
 
-    let color = restricted?
-      errorColor:
-      focus.interpolate({
+    const color = restricted
+      ? errorColor
+      : focus.interpolate({
         inputRange: [-1, 0, 1],
         outputRange: [errorColor, baseColor, tintColor],
       });
 
-    let top = input.interpolate({
+    const top = input.interpolate({
       inputRange: [0, 1],
       outputRange: [
         baseSize + fontSize * 0.25,
@@ -110,16 +118,18 @@ export default class Label extends PureComponent {
       ],
     });
 
-    let textStyle = {
+    const textStyle = {
       fontSize: input.interpolate({
         inputRange: [0, 1],
         outputRange: [fontSize, activeFontSize],
+        fontFamily,
+
       }),
 
       color,
     };
 
-    let containerStyle = {
+    const containerStyle = {
       position: 'absolute',
       top,
     };

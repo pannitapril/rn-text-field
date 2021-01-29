@@ -61,25 +61,10 @@ export default class TextField extends PureComponent {
     this.mounted = true;
   }
 
-  componentWillReceiveProps(props) {
-    const { error } = this.state;
-
-    if (props.value != null) {
-      this.setState({ text: props.value });
-    }
-
-    if (props.error && props.error !== error) {
-      this.setState({ error: props.error });
-    }
-
-    if (props.error !== this.props.error) {
-      this.setState({ errored: !!props.error });
-    }
-  }
-
-  componentWillUpdate(props, state) {
-    const { error, animationDuration: duration } = this.props;
-    const { focus, focused } = this.state;
+  getSnapshotBeforeUpdate(prevProps, prevState) {
+    const { error, animationDuration: duration } = prevProps;
+    const { focus, focused } = prevState;
+    const { props, state } = this;
 
     // eslint-disable-next-line no-bitwise
     if (props.error !== error || focused ^ state.focused) {
@@ -88,6 +73,29 @@ export default class TextField extends PureComponent {
       Animated
         .timing(focus, { toValue, duration })
         .start(this.onFocusAnimationEnd);
+
+      return toValue;
+    }
+    return null;
+  }
+
+  componentDidUpdate(prevProps, prevState) {
+    const { error } = prevState;
+    const { props } = this;
+
+    if (prevProps.value !== this.props.value) {
+      // eslint-disable-next-line react/no-did-update-set-state
+      this.setState({ text: props.value });
+    }
+
+    if (props.error && props.error !== error) {
+      // eslint-disable-next-line react/no-did-update-set-state
+      this.setState({ error: props.error });
+    }
+
+    if (prevProps.error !== props.error) {
+      // eslint-disable-next-line react/no-did-update-set-state
+      this.setState({ errored: !!props.error });
     }
   }
 
@@ -262,6 +270,7 @@ export default class TextField extends PureComponent {
     const {
       [type]: affix,
       fontSize,
+      fontFamily,
       baseColor,
       animationDuration,
       affixTextStyle,
@@ -276,6 +285,7 @@ export default class TextField extends PureComponent {
       active,
       focused,
       fontSize,
+      fontFamily,
       baseColor,
       animationDuration,
     };
@@ -286,6 +296,7 @@ export default class TextField extends PureComponent {
   }
 
   render() {
+    console.log('render');
     const {
       receivedFocus, focus, focused, error, errored, text = '',
     } = this.state;
@@ -301,6 +312,7 @@ export default class TextField extends PureComponent {
       disabledLineWidth,
       animationDuration,
       fontSize,
+      fontFamily,
       titleFontSize,
       labelFontSize,
       labelHeight,
@@ -374,6 +386,7 @@ export default class TextField extends PureComponent {
 
     const inputStyle = {
       fontSize,
+      fontFamily,
       textAlign,
 
       color: (disabled || defaultVisible)
@@ -393,6 +406,7 @@ export default class TextField extends PureComponent {
     };
 
     const errorStyle = {
+      fontFamily,
       color: errorColor,
 
       opacity: focus.interpolate({
@@ -409,6 +423,7 @@ export default class TextField extends PureComponent {
     };
 
     const titleStyle = {
+      fontFamily,
       color: baseColor,
 
       opacity: focus.interpolate({
@@ -455,6 +470,7 @@ export default class TextField extends PureComponent {
     const labelProps = {
       baseSize: labelHeight,
       basePadding: labelPadding,
+      fontFamily,
       fontSize,
       activeFontSize: labelFontSize,
       tintColor,
@@ -465,7 +481,7 @@ export default class TextField extends PureComponent {
       focused,
       errored,
       restricted,
-      style: labelTextStyle,
+      style: [labelTextStyle, { fontFamily }],
     };
 
     const counterProps = {
@@ -473,6 +489,7 @@ export default class TextField extends PureComponent {
       errorColor,
       count,
       limit,
+      fontFamily,
       fontSize: titleFontSize,
       style: titleTextStyle,
     };
@@ -536,6 +553,7 @@ TextField.propTypes = {
   animationDuration: PropTypes.number,
 
   fontSize: PropTypes.number,
+  fontFamily: PropTypes.string,
   titleFontSize: PropTypes.number,
   labelFontSize: PropTypes.number,
   labelHeight: PropTypes.number,
@@ -594,15 +612,16 @@ TextField.defaultProps = {
   animationDuration: 225,
 
   fontSize: 16,
+  fontFamily: 'Montserrat-Regular',
   titleFontSize: 12,
-  labelFontSize: 12,
+  labelFontSize: 14,
   labelHeight: 32,
   labelPadding: 4,
-  inputContainerPadding: 8,
+  inputContainerPadding: 10,
 
   tintColor: 'rgb(0, 145, 234)',
   textColor: '#000000',
-  baseColor: '#8C8C8C',
+  baseColor: '#949494',
 
   errorColor: 'rgb(213, 0, 0)',
 
