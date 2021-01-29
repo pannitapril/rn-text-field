@@ -1,3 +1,4 @@
+/* eslint-disable react/require-default-props */
 import PropTypes from 'prop-types';
 import React, { PureComponent } from 'react';
 import { View, Text } from 'react-native';
@@ -10,6 +11,7 @@ export default class Counter extends PureComponent {
     limit: PropTypes.number,
 
     fontSize: PropTypes.number,
+    fontFamily: PropTypes.string,
 
     baseColor: PropTypes.string.isRequired,
     errorColor: PropTypes.string.isRequired,
@@ -18,11 +20,14 @@ export default class Counter extends PureComponent {
   };
 
   render() {
-    let { count, limit, baseColor, errorColor, fontSize, style } = this.props;
+    const {
+      count, limit, baseColor, errorColor, fontSize, style, fontFamily,
+    } = this.props;
 
-    let textStyle = {
-      color: count > limit? errorColor : baseColor,
+    const textStyle = {
+      color: count > limit ? errorColor : baseColor,
       fontSize,
+      fontFamily,
     };
 
     if (!limit) {
@@ -32,7 +37,7 @@ export default class Counter extends PureComponent {
     return (
       <View style={styles.container}>
         <Text style={[styles.text, style, textStyle]}>
-          {count} / {limit}
+          `${count} / ${limit}`
         </Text>
       </View>
     );

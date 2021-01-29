@@ -9,5 +9,6 @@ export default StyleSheet.create({
 
   text: {
     backgroundColor: 'transparent',
+    fontFamily: 'Montserrat-Regular',
   },
 });

@@ -12,20 +12,20 @@ export default class Line extends PureComponent {
   };
 
   render() {
-    let {
+    const {
       width: borderWidth,
       color: borderColor,
       type: borderStyle,
     } = this.props;
 
-    if ('none' === borderStyle) {
+    if (borderStyle === 'none') {
       return null;
     }
 
-    let [top, right, bottom, left] = [-2, -1.5, 0, -1.5]
-      .map((value) => value * borderWidth);
+    const [top, right, bottom, left] = [-2, -1.5, 0, -1.5]
+      .map(value => value * borderWidth);
 
-    let lineStyle = {
+    const lineStyle = {
       borderColor,
       borderStyle,
       top,
@@ -36,7 +36,7 @@ export default class Line extends PureComponent {
     };
 
     return (
-      <View style={[styles.line, lineStyle]} pointerEvents='none' />
+      <View style={[styles.line, lineStyle]} pointerEvents="none" />
     );
   }
 }
