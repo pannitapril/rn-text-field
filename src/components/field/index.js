@@ -61,25 +61,10 @@ export default class TextField extends PureComponent {
     this.mounted = true;
   }
 
-  componentWillReceiveProps(props) {
-    const { error } = this.state;
-
-    if (props.value != null) {
-      this.setState({ text: props.value });
-    }
-
-    if (props.error && props.error !== error) {
-      this.setState({ error: props.error });
-    }
-
-    if (props.error !== this.props.error) {
-      this.setState({ errored: !!props.error });
-    }
-  }
-
-  componentWillUpdate(props, state) {
-    const { error, animationDuration: duration } = this.props;
-    const { focus, focused } = this.state;
+  getSnapshotBeforeUpdate(prevProps, prevState) {
+    const { error, animationDuration: duration } = prevProps;
+    const { focus, focused } = prevState;
+    const { props, state } = this;
 
     // eslint-disable-next-line no-bitwise
     if (props.error !== error || focused ^ state.focused) {
@@ -88,6 +73,29 @@ export default class TextField extends PureComponent {
       Animated
         .timing(focus, { toValue, duration })
         .start(this.onFocusAnimationEnd);
+
+      return toValue;
+    }
+    return null;
+  }
+
+  componentDidUpdate(prevProps, prevState) {
+    const { error } = prevState;
+    const { props } = this;
+
+    if (prevProps.value !== this.props.value) {
+      // eslint-disable-next-line react/no-did-update-set-state
+      this.setState({ text: props.value });
+    }
+
+    if (props.error && props.error !== error) {
+      // eslint-disable-next-line react/no-did-update-set-state
+      this.setState({ error: props.error });
+    }
+
+    if (prevProps.error !== props.error) {
+      // eslint-disable-next-line react/no-did-update-set-state
+      this.setState({ errored: !!props.error });
     }
   }
 
@@ -286,6 +294,7 @@ export default class TextField extends PureComponent {
   }
 
   render() {
+    console.log('render');
     const {
       receivedFocus, focus, focused, error, errored, text = '',
     } = this.state;
@@ -595,14 +604,14 @@ TextField.defaultProps = {
 
   fontSize: 16,
   titleFontSize: 12,
-  labelFontSize: 12,
+  labelFontSize: 14,
   labelHeight: 32,
   labelPadding: 4,
-  inputContainerPadding: 8,
+  inputContainerPadding: 10,
 
   tintColor: 'rgb(0, 145, 234)',
   textColor: '#000000',
-  baseColor: '#8C8C8C',
+  baseColor: '#949494',
 
   errorColor: 'rgb(213, 0, 0)',
 
