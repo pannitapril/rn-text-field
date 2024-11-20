@@ -539,6 +539,14 @@ export default class TextField extends PureComponent {
   }
 }
 
+const StyleShape = PropTypes.objectOf(PropTypes.oneOfType([
+  PropTypes.string,
+  PropTypes.number,
+  PropTypes.bool,
+  PropTypes.array,
+  PropTypes.object,
+]));
+
 TextField.propTypes = {
   ...TextInput.propTypes,
 
@@ -551,9 +559,9 @@ TextField.propTypes = {
   labelPadding: PropTypes.number,
   inputContainerPadding: PropTypes.number,
 
-  labelTextStyle: Text.propTypes.style,
-  titleTextStyle: Text.propTypes.style,
-  affixTextStyle: Text.propTypes.style,
+  labelTextStyle: StyleShape,
+  titleTextStyle: StyleShape,
+  affixTextStyle: StyleShape,
 
   tintColor: PropTypes.string,
   textColor: PropTypes.string,
